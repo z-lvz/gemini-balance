@@ -3,7 +3,7 @@ primary_region = "sin"
 
 [http_service]
   auto_start_machines = true
-  auto_stop_machines = off  # ✅ 禁用自动停机
+  auto_stop_machines = off # ✅ 禁用自动停机
   force_https = true
   internal_port = 8000        # 或你的实际端口
   min_machines_running = 1
