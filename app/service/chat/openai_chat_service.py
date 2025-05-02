@@ -102,20 +102,8 @@ def _get_safety_settings(model: str) -> List[Dict[str, str]]:
     #     and "gemini-2.0-pro-exp" not in model
     # ):
     if model == "gemini-2.0-flash-exp":
-        return [
-            {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "OFF"},
-            {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "OFF"},
-            {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "OFF"},
-            {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "OFF"},
-            {"category": "HARM_CATEGORY_CIVIC_INTEGRITY", "threshold": "OFF"},
-        ]
-    return [
-        {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
-        {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
-        {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
-        {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"},
-        {"category": "HARM_CATEGORY_CIVIC_INTEGRITY", "threshold": "BLOCK_NONE"},
-    ]
+        return settings.GEMINI_2_FLASH_EXP_SAFETY_SETTINGS
+    return settings.SAFETY_SETTINGS
 
 
 def _build_payload(
@@ -272,6 +260,7 @@ class OpenAIChatService:
                 async for line in self.api_client.stream_generate_content(
                     payload, model, current_attempt_key
                 ):
+                    # print(line)
                     if line.startswith("data:"):
                         chunk = json.loads(line[6:])
                         openai_chunk = self.response_handler.handle_response(
