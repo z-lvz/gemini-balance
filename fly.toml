@@ -11,5 +11,5 @@ primary_region = "sin"
 
   [http_service.concurrency]
     type       = "requests"
-    soft_limit = 99999
-    hard_limit = 9999999999
+    soft_limit = 9999
+    hard_limit = 9999
